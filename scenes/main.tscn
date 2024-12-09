@@ -1,0 +1,105 @@
+[gd_scene load_steps=6 format=3 uid="uid://b4o66jx5ycwd3"]
+
+[ext_resource type="Script" path="res://scenes/main.gd" id="1_lnf7j"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4slhi"]
+content_margin_left = 15.0
+content_margin_top = 15.0
+content_margin_right = 15.0
+content_margin_bottom = 15.0
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+
+[sub_resource type="GDScript" id="GDScript_qs4rr"]
+script/source = "extends ScrollContainer
+
+var start_text=100
+
+func _enter_tree():
+	set_deferred(\"scroll_vertical\", 10000)
+
+func _on_button_pressed():
+	var label=Label.new()
+	label.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+	start_text += 10
+	label.text = str(start_text)
+	$VBoxContainer.add_child(label)
+	call_deferred(\"update_scroll\")
+	pass # Replace with function body.
+
+func update_scroll():
+	set_deferred(\"scroll_vertical\", 10000)
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tvar5"]
+content_margin_left = 15.0
+content_margin_top = 15.0
+content_margin_right = 15.0
+content_margin_bottom = 15.0
+bg_color = Color(0.83806, 0.822337, 0.599362, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3yt6b"]
+content_margin_left = 15.0
+content_margin_top = 15.0
+content_margin_right = 15.0
+content_margin_bottom = 15.0
+bg_color = Color(0.00820202, 0.00820203, 0.00820202, 1)
+
+[node name="main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lnf7j")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 9.0
+
+[node name="commands" type="Label" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 3.3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_4slhi")
+text = "commands"
+autowrap_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 6.7
+script = SubResource("GDScript_qs4rr")
+
+[node name="debug" type="Label" parent="VBoxContainer/HBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_tvar5")
+
+[node name="userinput" type="LineEdit" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_3yt6b")
